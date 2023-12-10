@@ -23,6 +23,6 @@ function sendData() {
             console.log(error);
         });
         setTimeout(() => {
-        window.location.href = "html1.html";
+        window.location.href = "index.html";
     }, 1000);
 }
