@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Data</title>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+        }
+        h1 {
+            text-align: center;
+            color: blue;
+        }
+        table {
+            border-collapse: collapse; width: 50%;
+            margin-right: auto; margin-left: auto;
+        }
+        tr {
+            height: 70px;
+        }
+        td {
+            text-align: center;
+            height: 50px;
+            vertical-align: middle;
+        }
+        th {
+            background-color: brown;
+        }
+        tr:nth-child(even) {
+            background-color: #d9c2e7;
+        }
+        tr:nth-child(odd) {
+            background-color: #62d9b0;
+        }
+        button {
+             background-color: #4caf50;
+             color: #fff;
+             cursor: pointer;
+         }
+     
+        button:hover {
+             background-color: #45a049;
+         }
+    </style>
+</head>
+<body>
+    <a href="html1.html">Link to Game Page</a><br>
+    <a href="html2.html">Link to Add Game</a>
+    <h1 id="gameName">Games</h1>
+    <div id="quote"></div>
+
+    <button id="redirect"> Add Game </button>
+
+    <script>
+        window.onload = function () {
+            const queryString = window.location.search;
+            const urlParams = new URLSearchParams(queryString);
+            const ind = urlParams.get('index');
+            const aid = parseInt(ind) + 2;
+            console.log(aid);
+            var quoteTag = document.getElementById('quote');
+            quoteTag.innerHTML = "";
+            var gameName = document.getElementById('gameName');
+            
+            var Redirect = document.getElementById('redirect');
+            Redirect.innerHTML = `<a href="html4.html?index=${aid}">New Entry</a>`;
+            var tableTag = "<table>";
+            tableTag += "<tr><th>Player</th><th>Score</th><th>Time</th></tr>";
+            var index = 0;
+            fetch(`https://lime-faithful-hippo.cyclic.app/api/leaderBoard/${aid}`)
+                .then(function (response) {
+                    return response.json();
+                })
+                .then(function (data) {
+                    console.log(data);
+                    data.Leaderboard.forEach(element => {
+
+                        tableTag += `<tr>`;
+                        tableTag += `<td>${element.Player}</td>`;
+                        tableTag += `<td>${element.Score}</td>`;
+                        tableTag += `<td>${element.Time}</td>`;
+                        tableTag += `</tr>`;
+                        index++;
+                        gameName.innerHTML = data.GameName;
+                    });
+
+                })
+                .then(function () {
+                    tableTag += `</table>`;
+                    quoteTag.innerHTML += tableTag;
+
+                })
+
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Data</title>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+        }
+        button {
+            text-align: center;
+             background-color: #4caf50;
+             color: #fff;
+             cursor: pointer;
+             margin: 0 auto;
+             text-decoration: none;
+         }
+     
+        button:hover {
+             background-color: #45a049;
+         }
+        h1 {
+            text-align: center;
+            color: blue;
+        }
+        table {
+            border-collapse: collapse; width: 50%;
+            margin-right: auto; margin-left: auto;
+        }
+        tr {
+            height: 70px;
+        }
+        td {
+            text-align: center;
+            height: 50px;
+            vertical-align: middle;
+        }
+        th {
+            background-color: brown;
+        }
+        tr:nth-child(even) {
+            background-color: #d9c2e7;
+        }
+        tr:nth-child(odd) {
+            background-color: #62d9b0;
+        }
+        button {
+             background-color: #4caf50;
+             color: #fff;
+             cursor: pointer;
+         }
+         button {
+             background-color: #4caf50;
+             color: #fff;
+             cursor: pointer;
+         }
+     
+        button:hover {
+             background-color: #45a049;
+         }
+    </style>
+</head>
+<body>
+    <a href="html1.html">Link to Game Page</a> <br>
+    <a href="html2.html">Link to Add Game</a>
+    <h1>Games</h1>
+    <div id="quote"></div>
+    <button style="text-decoration: none; margin: 0 auto;"> <a href="html2.html">Add Game</a> </button>
+
+    <script>
+        
+        window.onload = function () {
+            var quoteTag = document.getElementById('quote');
+            quoteTag.innerHTML = "";
+            var tableTag = "<table>";
+            tableTag += "<tr><th>Game Name</th><th>Platform</th></tr>";
+            var index = 0;
+            fetch("https://lime-faithful-hippo.cyclic.app/api/games")
+                .then(function (response) {
+                    return response.json();
+                })
+                .then(function (data) {
+                    console.log(data);
+                    data.forEach(element => {
+                        tableTag += `<tr>`;
+                        tableTag += `<td><a href="html3.html?index=${index}">${element.GameName}</a></td>`;
+                        tableTag += `<td>${element.Platform}</td>`;
+                        tableTag += `</tr>`;
+                        index++;
+                        console.log= "${index}";
+                    });
+                })
+                .then(function () {
+                    tableTag += `</table>`;
+                    quoteTag.innerHTML += tableTag;
+                });
+        }
+    </script>
+</body>
+</html>
